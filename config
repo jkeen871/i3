@@ -86,8 +86,7 @@ exec --no-startup-id volumeicon
 exec /home/jkeen/.screenlayout/Openbox.sh
 exec --no-startup-id /usr/lib/gnome-settings/gnome-settings-daemon
 exec xrdb -load ~/.Xdefaults
-exec gnome-terminal -e /home/jkeen/bin/wegoweather.sh --class weather    #%%  WEGO Weather
-exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc"   #%% NEOMUTT
+exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc"  
 default_border pixel 4
 exec xcompmgr -c -f -n
 
@@ -119,10 +118,9 @@ bindsym $mod+F12 exec ~/.config/i3/i3-vpn/i3-vpn-status
 bindsym $mod+F4 exec udiskie-dmenu             
 bindsym $mod+s exec slack		
 bindsym $mod+e exec gedit 	
-bindsym $mod+shift+w exec gnome-terminal -e /home/jkeen/bin/wegoweather.sh  --class weather
 bindsym $mod+Return exec gnome-terminal 		
 bindsym $mod+q kill 				
-bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 10"  
+bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 16"  
 bindsym $mod+h split h					
 bindsym $mod+v split v				
 bindsym $mod+f fullscreen toggle 	
@@ -154,8 +152,8 @@ mode "$personal" {
         bindsym g exec google-chrome --app=https://www.gmail.com --new-window --profile-directory="Default";mode "default"
 	bindsym i exec google-chrome --app=https://github.com --new-windows --profile-direectory="Default";mode "default"
 	bindsym c exec google-chrome --new-window --profile-directory="Default";mode "default"
-	bindsym e exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc";mode "default"   #%% NEOMUTT
-	bindsym j exec gnome-terminal -e journalctl -f;mode "default"
+	bindsym e exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc";mode "default"   
+	bindsym j exec gnome-terminal -e "journalctl -f";mode "default"
 	bindsym r exec urxvt -e ranger;mode "default"
 	bindsym v exec VirtualBox ; mode "default"
         bindsym Return mode "default"
