@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#This scrip will toggle a netExtender vpn up or down and send a system notifcation
+# If you no parameters are passed the script expects that the variable values are defined in the script.
+# Fill in the variable values in after the line :
+#  if [ $OPTIND -eq 1 ]; then
+####
+
+function usage(){
+        echo "	-a NetExtender Endpoint or connection address"
+	echo "	-c NetExtender connection name"
+	echo "	-d NetExtender Domain"
+	echo "	-p NetExtender Password"
+	echo "	-u NetExtender Username"
+	echo "	-h help"
+
+}
+
+
+	while getopts "hu:d:a:p:c:" arg; do
+		case $arg in
+		h)
+			usage
+		;;
+		u)
+			username=$OPTARG
+		;;
+		d)
+			domain=$OPTARG
+		;;
+		a)
+			address=$OPTARG
+		;;
+		p)
+			password=$OPTARG
+		;;
+		c)
+			connectionname=$OPTARG
+		;;
+#	?)
+#		usage
+#	;;
+		esac
+	done
+
+if [ $OPTIND -eq 1 ]; then
+        #username="<your username>"
+        #domain="<netExtender domain>"
+        #address="<netExtender connectin address>"
+        #password="<netExtender password>"
+        #connectionname="<connection name>"
+fi  
+
+
+processstring="netExtender -u $username -p $password -d $domain $address"
+echo ".$processstring."
+if [ "$processstring" = "netExtender -u  -p  -d  " ];then
+	echo "No parameters provided, either provide paremeters, or edit this script and give variables the proper values"
+	usage
+	exit
+fi
+
+netextenderprocess=$(ps -ef | grep "$processstring"| grep -v "grep"| wc -l)
+if [ "$netextenderprocess"  = "0" ]; then
+	echo "connection down, connecting..."
+	zenity --notification --text="Connection to $connectionname is not active, connecting"
+	(echo Y | $processstring & ) && (zenity --notification --text="Connected to $connectionname" &) 
+else
+	echo "connection is active, disconnecting..."
+	kill -9 `ps -ef | grep "$processstring" | grep -v 'grep' | awk '{print $2}'`
+	zenity --notification --text="Disconnected from $connectionname."
+fi
+
+
+

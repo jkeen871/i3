@@ -1,0 +1,26 @@
+
+dnf install lightdm zenity urxvt w3m w3m-img mutt offlineimap msmtp ranger network-manager-applet volumeicon xrandr arandr gnome-settings-daemon gnome-terminal xcompmgr
+dnf -y install dnf-plugins-core
+dnf -y copr enable flatcap/neomutt
+dnf -y install neomutt
+
+netExtender: Optional this client requires java, https://www.mysonicwall.com/muir/freedownloads
+
+set ligthdm as display manager:
+	dnf install lightdm
+	systemctl disable [old display manager] << Default is GDM
+	systemctl enable lightdm
+	reboot
+
+
+
+
+exec --no-startup-id nm-applet
+exec --no-startup-id volumeicon
+exec /home/jkeen/.screenlayout/Openbox.sh
+exec --no-startup-id /usr/lib/gnome-settings/gnome-settings-daemon
+exec xrdb -load ~/.Xdefaults
+exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc"   #%% NEOMUTT
+default_border pixel 4
+exec xcompmgr -c -f -n
+

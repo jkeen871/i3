@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Script to toggle networkmanager VPN's.
+# Pass the Network Manager VPN name as the first parameter.
+#
+# When this script is executed it will check to see if the connection is already running. If it is it will shut it down, if it is not it will lauch this vpn connection.
+
+connection=$1
+
+nmcli connection show | grep $connection
+
+if [ "`nmcli connection show --active | grep $connection`"  = "" ]; then
+	echo "connection down, connecting..."
+	nmcli con up id  $1
+else
+	echo "connection is active, disconnecting..."
+	nmcli con down id $1
+
+fi
+
+
+
