@@ -1,4 +1,4 @@
-# I3 on Fedora 29
+# I3-gaps/Bumblebee-status/j4-dmenu on Fedora 29
 I3 customizations
 
 NOTE : at this moment this repository and instructions are incomplete.  Feel free to comment and suggest.  This should be complete in the next week or so.
@@ -30,22 +30,38 @@ Install i3-gaps
 
 This will install i3-gaps will be available at your login screen as an additional desktop environment.
 
+Logout and log back in to get to the default i3 desktop.
+
+To get a terminal from the default i3 desktop press [alt-enter]
+***
+
 Clone this repository to your home directory:
 
     cd ~
     git clone https://github.com/jkeen871/i3-config.git
     
-Install additional apps for system try icons.
+Install additional packages and dependencies:
 
-    dnf -y install lightdm zenity urxvt w3m w3m-img mutt offlineimap msmtp ranger network-manager-applet volumeicon xrandr arandr gnome-settings-daemon gnome-terminal xcompmgr
-    dnf -y install dnf-plugins-core
-    dnf -y copr enable flatcap/neomutt
-    dnf -y install neomutt
+    dnf -y install lightdm zenity urxvt w3m w3m-img ranger network-manager-applet volumeicon xrandr arandr gnome-settings-daemon gnome-terminal xcompmgr fontawesome-fonts powerline-fonts
+       pip3 install psutil netifaces
+***
+Install bumble-bee status:
 
+Bumblebee status seems to work with python3+:
+
+    dnf install python3-devel
+    pip3 install psutil netifaces
+
+
+***
 Install J4-dmenu-desktop 
 
- Follow the instructions at : https://github.com/enkore/j4-dmenu-desktop
- * You will have to build this package from source, I do not know of a fedora rpm for j4-dmenu-desktop.
+ Follow the instructions at : 
+ 
+     https://github.com/enkore/j4-dmenu-desktop
+     
+ * You will have to build this package from source, I do not know of a fedora rpm for j4-dmenu-desktop.  The basic instructions are as follows:
+
  Clone j4-dmenu-desktop from :
  
     cd ~

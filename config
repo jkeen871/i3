@@ -99,7 +99,7 @@ exec xcompmgr -c -f -n
 bar {
 #	output DP-4
         status_command i3status
-        status_command ~/.config/i3/bumblebee-status/bumblebee-status -d -m cpu memory time date -p time.format="%H:%M:%S" date.format="%a, %b %d %y" -t greyish-powerline
+        status_command ~/.config/i3/bumblebee-status/bumblebee-status -d -m cpu memory time date -p time.format="%H:%M:%S" date.format="%a, %b %d %y" -t powerline
 #	tray_output DP-4 
 	position top
 	workspace_buttons yes
