@@ -12,15 +12,3 @@ set ligthdm as display manager:
 	systemctl enable lightdm
 	reboot
 
-
-
-
-exec --no-startup-id nm-applet
-exec --no-startup-id volumeicon
-exec /home/jkeen/.screenlayout/Openbox.sh
-exec --no-startup-id /usr/lib/gnome-settings/gnome-settings-daemon
-exec xrdb -load ~/.Xdefaults
-exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc"   #%% NEOMUTT
-default_border pixel 4
-exec xcompmgr -c -f -n
-
