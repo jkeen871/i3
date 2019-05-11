@@ -1,7 +1,10 @@
-# I3-gaps/Bumblebee-status/j4-dmenu on Fedora 29
+# I3-gaps/Bumblebee-status/j4-dmenu on Fedora 29/netExtender/NetworkManager
 I3 customizations
 
-NOTE : at this moment this repository and instructions are incomplete.  Feel free to comment and suggest.  This should be complete in the next week or so.
+
+**NOTE : at this moment this repository and instructions are incomplete.  Feel free to comment and suggest.  This should be complete in the next week or so.
+**
+I have custome scripts under i3-vpn to toggle VPN's on or off with a single bindsym key.
 
 
 Install I3 Gaps:
