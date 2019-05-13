@@ -35,8 +35,6 @@ client.focused_inactive		#333333		#333333		#999999		#000000
 client.unfocused		#333333		#333333		#7f7f7f		#000000
 client.urgent			#b20000		#b20000		#cccccc		#000000 
 
-
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -80,13 +78,15 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#for_window [class="weather"] floating enable
 
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec /home/jkeen/.screenlayout/Openbox.sh
 exec --no-startup-id /usr/lib/gnome-settings/gnome-settings-daemon
 exec xrdb -load ~/.Xdefaults
-exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc"  
+exec gnome-terminal -e /home/jkeen/bin/wegoweather.sh --class weather  
+exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc" --profile=NeoMutt
 default_border pixel 4
 exec xcompmgr -c -f -n
 
@@ -112,18 +112,23 @@ bindsym $mod+minus scratchpad show
 
 # Show the sup-mail scratchpad window, if any.
 bindsym mod4+s [title="^Sup ::"] scratchpad show 	
+
+for_window [ class="Xfce4-appfinder" ] floating enable
+
 bindsym $mod+p exec gnome-screenshot -i          
 bindsym $mod+F3 exec urxvt -e ranger            
 bindsym $mod+F12 exec ~/.config/i3/i3-vpn/i3-vpn-status
 bindsym $mod+F4 exec udiskie-dmenu             
 bindsym $mod+s exec slack		
 bindsym $mod+e exec gedit 	
+bindsym $mod+shift+w exec gnome-terminal -e "/home/jkeen/bin/wegoweather.sh" 
 bindsym $mod+Return exec gnome-terminal 		
 bindsym $mod+q kill 				
-bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 16"  
+bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 10"  
 bindsym $mod+h split h					
 bindsym $mod+v split v				
 bindsym $mod+f fullscreen toggle 	
+bindsym $mod+m exec xfce4-appfinder 
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
@@ -135,7 +140,6 @@ bindsym $mod+space focus mode_toggle			#%% change focus between tiling / floatin
 bindsym $mod+a focus parent				#%% focus the parent container
 #bindsym $mod+d focus child				#%% focus the child container
 
-
 set $browsers Browsers : [G]oogle-Chrome  [F]irefox
 bindsym $mod+b mode "$browsers"                
 mode "$browsers" {
@@ -146,16 +150,26 @@ mode "$browsers" {
 }
 
 
-set $personal Personal : [c]hrome [e]mail-mutt [g]mail G[i]thub [j]ournalctl [r]anger [v]irtualbox  
+set $personal Personal : [c]hrome [e]mail-mutt [g]mail G[i]thub [j]ournalctl [m]ycroft [r]anger [v]irtualbox [w]eather  
 bindsym $mod+F8 mode "$personal"
 mode "$personal" {
         bindsym g exec google-chrome --app=https://www.gmail.com --new-window --profile-directory="Default";mode "default"
 	bindsym i exec google-chrome --app=https://github.com --new-windows --profile-direectory="Default";mode "default"
 	bindsym c exec google-chrome --new-window --profile-directory="Default";mode "default"
-	bindsym e exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc";mode "default"   
-	bindsym j exec gnome-terminal -e "journalctl -f";mode "default"
+	bindsym w exec gnome-terminal -e /home/jkeen/bin/wegoweather.sh --class weather;mode "default" 
+	bindsym e exec /usr/bin/gnome-terminal -e "/usr/bin/neomutt -F ~/Mail/muttrc" --profile=NeoMutt;mode "default"  
+	bindsym j exec gnome-terminal -e journalctl -f;mode "default"
+	bindsym m exec gnome-terminal -e mycroft-start debug;mode "default"
 	bindsym r exec urxvt -e ranger;mode "default"
 	bindsym v exec VirtualBox ; mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $virtualbox VirtualBox : [N]orwin [V]BManager
+bindsym $mod+F5  mode "$virtualbox"   
+mode "$virtualbox" {
+	bindsym n exec VBoxManage startvm "Norwin"; mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -227,17 +241,15 @@ bindsym $mod+l exec i3lock -c000000
 #Set inner and outer gaps
 gaps inner 25 
 gaps outer 25 
-smart_gaps on
+#smart_gaps on
 smart_borders on
-
-
 
 #GAP CONTROL CODE
 set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global) 
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
- 
+
 mode "$mode_gaps" {
         bindsym o      mode "$mode_gaps_outer"
         bindsym i      mode "$mode_gaps_inner"
@@ -249,10 +261,9 @@ mode "$mode_gaps_inner" {
         bindsym plus  gaps inner current plus 5
         bindsym minus gaps inner current minus 5
         bindsym 0     gaps inner current set 0
- 
+
         bindsym Shift+plus  gaps inner all plus 5
         bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
  
         bindsym Return mode "default"
         bindsym Escape mode "default"
